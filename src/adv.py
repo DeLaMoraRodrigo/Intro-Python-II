@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,8 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player_name = input("Please, enter your name\n")
+player = Player(player_name, room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +52,44 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+running = True
+
+while running:
+    print(f"============= {player.current_room.name} =============\n")
+    player_input = input('Use "w" key to move north, "d" key to move east, "s" key to move south, "a" key to move west, and "q" to quit game\n')
+    notNorth = "There is no path to the north"
+    notEast = "There is no path to the east"
+    notSouth = "There is no path to the south"
+    notWest = "There is no path to the west"
+    separator = "==========================================="
+
+    if player_input == "w":
+        if player.current_room.n_to != None:
+            player.current_room = player.current_room.n_to
+            print(f"{separator}\n\n{player.current_room.description}\n")
+        else:
+            print(f"{separator}\n\n{notNorth}\n")
+    elif player_input == "d":
+        if player.current_room.e_to != None:
+            player.current_room = player.current_room.e_to
+            print(f"{separator}\n\n{player.current_room.description}\n")
+        else:
+            print(f"{separator}\n\n{notEast}\n")
+    elif player_input == "s":
+        if player.current_room.s_to != None:
+            player.current_room = player.current_room.s_to
+            print(f"{separator}\n\n{player.current_room.description}\n")
+        else:
+            print(f"{separator}\n\n{notSouth}\n")
+    elif player_input == "a":
+        if player.current_room.w_to != None:
+            player.current_room = player.current_room.w_to
+            print(f"{separator}\n\n{player.current_room.description}\n")
+        else:
+            print(f"{separator}\n\n{notWest}\n")
+    elif player_input == "q":
+        running = False
+        print("Thank you for playing")
+    else:
+        print("Please enter a valid command")  
