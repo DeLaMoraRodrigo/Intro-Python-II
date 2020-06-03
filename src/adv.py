@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -22,6 +23,14 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# Declate all items
+
+item = {
+    'Sword': Item("Sword", "You find a sword made of iron"),
+    'Shield': Item("Shield", "You find a flimsy wooden shield"),
+    'Key': Item("Key", "You find a key on the floor... You wonder what it could possibly open")
+}
+
 
 # Link rooms together
 
@@ -33,6 +42,12 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+# Fill rooms with items
+
+room['foyer'].add_item(item['Sword'])
+room['overlook'].add_item(item['Key'])
+room['narrow'].add_item(item['Shield'])
 
 #
 # Main
@@ -57,7 +72,7 @@ running = True
 
 while running:
     print(f"============= {player.current_room.name} =============\n")
-    player_input = input('Use "w" key to move north, "d" key to move east, "s" key to move south, "a" key to move west, and "q" to quit game\n')
+    player_input = input('Use "w" key to move north, "d" key to move east, "s" key to move south, "a" key to move west, "i" key to open inventory, "o" key to search the room, and "q" to quit game\n')
     notNorth = "There is no path to the north"
     notEast = "There is no path to the east"
     notSouth = "There is no path to the south"
@@ -88,6 +103,32 @@ while running:
             print(f"{separator}\n\n{player.current_room.description}\n")
         else:
             print(f"{separator}\n\n{notWest}\n")
+    elif player_input == "i":
+        if len(player.inventory) > 0:
+            for index, item in enumerate(player.inventory):
+                print(f"{index}: {item.name}")
+                inv_input = input("Type in the slot number of the item you want to drop or type 'NO' to close inventory")
+                if inv_input == "NO":
+                    print("You close your inventory")
+                elif inv_input == "0" or inv_input == "1" or inv_input == "2":
+                    print(f"You have dropped your {player.inventory[int(inv_input)]}")
+                    room[player.current_room.name].add_item(player.inventory[int(inv_input)])
+                    player.drop_item(int(inv_input))
+                else:
+                    print("Please enter a valid command")
+        else:
+            print("\nYour inventory is empty\n")
+    elif player_input == "o":
+        if len(player.current_room.items) > 0:
+            for index, item in enumerate(player.current_room.items):
+                print(f"\n{item.description}\n")
+                search_input = input(f"Would you like to pick up the {item.name}\nYES/NO\n")
+                if search_input == "YES":
+                    player.pick_up_item(player.current_room.items[int(index)])
+                    # room[player.current_room.name].remove_item(0)
+                    print(player.current_room)
+                    print(room[player.current_room.name])
+                    print(f"You have picked up the {player.inventory[int(index)]}")
     elif player_input == "q":
         running = False
         print("Thank you for playing")
