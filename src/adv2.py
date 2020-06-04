@@ -109,16 +109,16 @@ while running:
             for item in player.inventory:
                 print(f"{item.name}")
             inv_input = input("\nWrite the name of the item you would like to drop or write 'CLOSE' to close inventory\n").lower()
-            if inv_input == "sword":
+            if inv_input == "sword" and player.inventory.__contains__(item_list["sword"]):
                 print("\nYou dropped the Sword\n")
                 # room[player.current_room.name.lower()].add_item(item_list[inv_input])
                 player.current_room.add_item(item_list[inv_input])
                 player.drop_item(item_list[inv_input])
-            elif inv_input == "shield":
+            elif inv_input == "shield" and player.inventory.__contains__(item_list["shield"]):
                 print("\nYou dropped the Shield\n")
                 player.current_room.add_item(item_list[inv_input])
                 player.drop_item(item_list[inv_input])
-            elif inv_input == "key":
+            elif inv_input == "key" and player.inventory.__contains__(item_list["key"]):
                 print("\nYou dropped the Key\n")
                 player.current_room.add_item(item_list[inv_input])
                 player.drop_item(item_list[inv_input])
@@ -134,16 +134,16 @@ while running:
             for item in player.current_room.items:
                 print(f"{item.description}: {item.name}")
             search_input = input("\nWrite the name of the item you would like to grab or write 'STOP' to stop searching\n").lower()
-            if search_input == "sword":
+            if search_input == "sword" and player.current_room.items.__contains__(item_list["sword"]):
                 print("\nYou pick up the sword\n")
                 # room[player.current_room.name.lower()].remove_item(item_list[search_input])
                 player.current_room.remove_item(item_list[search_input])
                 player.pick_up_item(item_list[search_input])
-            elif search_input == "shield":
+            elif search_input == "shield" and player.current_room.items.__contains__(item_list["shield"]):
                 print("\nYou pick up the shield\n")
                 player.current_room.remove_item(item_list[search_input])
                 player.pick_up_item(item_list[search_input])
-            elif search_input == "key":
+            elif search_input == "key" and player.current_room.items.__contains__(item_list["key"]):
                 print("\nYou pick up the key\n")
                 player.current_room.remove_item(item_list[search_input])
                 player.pick_up_item(item_list[search_input])
