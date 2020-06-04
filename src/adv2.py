@@ -155,6 +155,6 @@ while running:
             print("\nYou searched the area and found nothing of interest\n")
     elif player_input == "q":
         running = False
-        print("Thank you for playing")
+        print("\nThank you for playing\n")
     else:
-        print("Please enter a valid command")  
+        print("\nPlease enter a valid command\n")  
