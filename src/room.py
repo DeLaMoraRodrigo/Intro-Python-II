@@ -14,7 +14,10 @@ class Room:
     def add_item(self, item):
         self.items.append(item)
 
-    def remove_item(self, id):
-        self.items[id].remove()
+    def remove_item(self, index):
+        for i, item in enumerate(self.items):
+            if index == i and item:
+                del self.items[index]
+                break
 
 

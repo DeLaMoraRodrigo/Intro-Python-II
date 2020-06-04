@@ -106,29 +106,39 @@ while running:
     elif player_input == "i":
         if len(player.inventory) > 0:
             for index, item in enumerate(player.inventory):
-                print(f"{index}: {item.name}")
-                inv_input = input("Type in the slot number of the item you want to drop or type 'NO' to close inventory")
+                inv_input = input(f"Do you want to drop {item.name}\nYES/NO\n")
                 if inv_input == "NO":
-                    print("You close your inventory")
-                elif inv_input == "0" or inv_input == "1" or inv_input == "2":
-                    print(f"You have dropped your {player.inventory[int(inv_input)]}")
-                    room[player.current_room.name].add_item(player.inventory[int(inv_input)])
-                    player.drop_item(int(inv_input))
+                    continue
+                elif inv_input == "YES":
+                    print(f"\nYou have dropped your {player.inventory[index].name}\n")
+                    player.current_room.add_item(player.inventory[index])
+                    player.drop_item(index)
+                    break
                 else:
-                    print("Please enter a valid command")
+                    print("\nPlease enter a valid command\n")
+            print("\nYou close your inventory\n")
         else:
             print("\nYour inventory is empty\n")
     elif player_input == "o":
         if len(player.current_room.items) > 0:
+            if len(player.current_room.items) > 1:
+                print(f"You found {len(player.current_room.items)} items")
             for index, item in enumerate(player.current_room.items):
                 print(f"\n{item.description}\n")
                 search_input = input(f"Would you like to pick up the {item.name}\nYES/NO\n")
                 if search_input == "YES":
-                    player.pick_up_item(player.current_room.items[int(index)])
-                    # room[player.current_room.name].remove_item(0)
-                    print(player.current_room)
-                    print(room[player.current_room.name])
-                    print(f"You have picked up the {player.inventory[int(index)]}")
+                    # print(player.current_room.items[int(index)].name)
+                    # print(item.name)
+                    print(f"\nYou have picked up the {player.current_room.items[index].name}\n")
+                    player.pick_up_item(player.current_room.items[index])
+                    player.current_room.remove_item(index)
+                    break
+                elif search_input == "NO":
+                    print("\nYou decide to leave the item\n")
+                else:
+                    print("\nPlease enter a valid command\n")
+        else:
+            print("\nYou searched the area and found nothing of interest\n")
     elif player_input == "q":
         running = False
         print("Thank you for playing")
