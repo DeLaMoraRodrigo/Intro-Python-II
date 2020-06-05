@@ -54,6 +54,8 @@ item_list = {
     'lantern': Item("Lantern", "You find a golden lantern which emits a bright light throughout the area.")
 }
 
+item_names = ['sword', 'shield', 'key', 'lantern']
+
 # Declare all monsters
 
 monster_list = {
@@ -144,10 +146,11 @@ while running:
 
     if player_input == "w":
         if player.current_room.n_to != None and (not player.current_room.n_to.is_locked or player.inventory.__contains__(item_list['key'])):
+            print(f"{separator}\n")
             if player.inventory.__contains__(item_list['key']) and player.current_room.n_to.is_locked:
-                print("\nYou use the key to open the locked door\n")
+                print("You use the key to open the locked door\n")
             player.current_room = player.current_room.n_to
-            print(f"{separator}\n\n{player.current_room.description}\n")
+            print(f"{player.current_room.description}\n")
             if player.current_room.is_light == False and not player.inventory.__contains__(item_list['lantern']): 
                 print("It is pitch black, you will need a light source to see anything\n")
             elif len(player.current_room.monsters) > 0:
@@ -163,10 +166,11 @@ while running:
             print(f"{separator}\n\n{notNorth}\n")
     elif player_input == "d":
         if player.current_room.e_to != None and (not player.current_room.e_to.is_locked or player.inventory.__contains__(item_list['key'])):
+            print(f"{separator}\n")
             if player.inventory.__contains__(item_list['key']) and player.current_room.e_to.is_locked:
-                print("\nYou use the key to open the locked door\n")
+                print("You use the key to open the locked door\n")
             player.current_room = player.current_room.e_to
-            print(f"{separator}\n\n{player.current_room.description}\n")
+            print(f"{player.current_room.description}\n")
             if player.current_room.is_light == False and not player.inventory.__contains__(item_list['lantern']): 
                 print("It is pitch black, you will need a light source to see anything\n")
             elif len(player.current_room.monsters) > 0:
@@ -182,10 +186,11 @@ while running:
             print(f"{separator}\n\n{notEast}\n")
     elif player_input == "s":
         if player.current_room.s_to != None and (not player.current_room.s_to.is_locked or player.inventory.__contains__(item_list['key'])):
+            print(f"{separator}\n")
             if player.inventory.__contains__(item_list['key']) and player.current_room.s_to.is_locked:
-                print("\nYou use the key to open the locked door\n")
+                print("You use the key to open the locked door\n")
             player.current_room = player.current_room.s_to
-            print(f"{separator}\n\n{player.current_room.description}\n")
+            print(f"{player.current_room.description}\n")
             if player.current_room.is_light == False and not player.inventory.__contains__(item_list['lantern']): 
                 print("It is pitch black, you will need a light source to see anything\n")
             elif len(player.current_room.monsters) > 0:
@@ -201,10 +206,11 @@ while running:
             print(f"{separator}\n\n{notSouth}\n")
     elif player_input == "a":
         if player.current_room.w_to != None and (not player.current_room.w_to.is_locked or player.inventory.__contains__(item_list['key'])):
+            print(f"{separator}\n")
             if player.inventory.__contains__(item_list['key']) and player.current_room.w_to.is_locked:
-                print("\nYou use the key to open the locked door\n")
+                print("You use the key to open the locked door\n")
             player.current_room = player.current_room.w_to
-            print(f"{separator}\n\n{player.current_room.description}\n")
+            print(f"{player.current_room.description}\n")
             if player.current_room.is_light == False and not player.inventory.__contains__(item_list['lantern']): 
                 print("It is pitch black, you will need a light source to see anything\n")
             elif len(player.current_room.monsters) > 0:
@@ -224,7 +230,7 @@ while running:
             for item in player.inventory:
                 print(f"{item.name}")
             inv_input = input("\nWrite the name of the item you would like to drop or write 'CLOSE' to close inventory\n").lower()
-            if inv_input != "close" and player.inventory.__contains__(item_list[inv_input]):
+            if item_names.__contains__(inv_input) and player.inventory.__contains__(item_list[inv_input]):
                 print(f"\nYou dropped the {item_list[inv_input].name}\n")
                 player.current_room.add_item(item_list[inv_input])
                 player.drop_item(item_list[inv_input])
@@ -236,11 +242,12 @@ while running:
             print("\nYour inventory is empty\n")
     elif player_input == "o":
         if len(player.current_room.items) > 0 and (player.current_room.is_light or player.inventory.__contains__(item_list['lantern'])):
+            print(f"{separator}\n")
             print("")
             for item in player.current_room.items:
                 print(f"{item.description}: {item.name}")
             search_input = input("\nWrite the name of the item you would like to grab or write 'STOP' to stop searching\n").lower()
-            if search_input != "stop" and player.current_room.items.__contains__(item_list[search_input]):
+            if item_names.__contains__(search_input) and player.current_room.items.__contains__(item_list[search_input]):
                 print(f"\nYou pick up the {item_list[search_input].name}\n")
                 player.current_room.remove_item(item_list[search_input])
                 player.pick_up_item(item_list[search_input])
